@@ -1,18 +1,22 @@
 import { fastify } from "fastify";
+import { DatabaseMemory } from "./database-memory.js";
 
 const server = fastify();
 
-server.get('/', () => {
-    return 'Hello world';
-});
+server.post('/courses', () => {
 
-server.get('/hello', () => {
-    return 'Hello';
-});
+})
 
-server.get('/node', () => {
-    return 'Hello node.js';
-});
+server.get('/courses/:id', (req, res) => {
 
+})
+
+server.put('/courses/:id', (req, res) => {
+
+})
+
+server.delete('/courses/:id', (req, res) => {
+
+})
 
 server.listen({ port: 8080 });
