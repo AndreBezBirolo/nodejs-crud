@@ -1,17 +1,18 @@
 import {fastify} from "fastify";
-import {DatabaseMemory} from "./database-memory.js";
+import {DatabasePostgres} from "./database/database-postgres.js";
 
 const server = fastify();
-const db = new DatabaseMemory();
+// const db = new DatabaseMemory();
+const db = new DatabasePostgres();
 
-server.get('/courses', (req, res) => {
+server.get('/courses', async (req, res) => {
     const queryTitle = req.query.title;
 
-    return db.list(queryTitle);
+    return await db.list(queryTitle);
 })
 
-server.post('/courses', (req, res) => {
-    const { title, description, duration } = req.body
+server.post('/courses', async (req, res) => {
+    const {title, description, duration} = req.body
 
     const course = {
         title,
@@ -19,34 +20,34 @@ server.post('/courses', (req, res) => {
         duration
     }
 
-    db.create(course)
+    await db.create(course)
 
     return res.status(201).send(course);
 })
 
-server.get('/courses/:id', (req, res) => {
-    return db.getById(req.params.id);
+server.get('/courses/:id', async (req, res) => {
+    return await db.getById(req.params.id);
 })
 
-server.put('/courses/:id', (req, res) => {
+server.put('/courses/:id', async (req, res) => {
     const id = req.params.id;
-    const { title, description, duration } = req.body
+    const {title, description, duration} = req.body
     const course = {
         title,
         description,
         duration
     }
 
-    db.update(id, course);
+    await db.update(id, course);
 
     return res.status(204).send(course)
 })
 
-server.delete('/courses/:id', (req, res) => {
+server.delete('/courses/:id', async (req, res) => {
     const id = req.params.id;
-    db.delete(id);
+    await db.delete(id);
 
     return res.status(204).send();
 })
 
-server.listen({ port: 8080 });
+server.listen({port: 8080});

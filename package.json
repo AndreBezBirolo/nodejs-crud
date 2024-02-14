@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "node --watch --no-warnings server.js"
+    "dev": "node --experimental-modules --watch --no-warnings server.js"
   },
   "repository": {
     "type": "git",
@@ -15,6 +15,10 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "fastify": "^4.26.1"
+    "fastify": "^4.26.1",
+    "postgres": "^3.4.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.4"
   }
 }
